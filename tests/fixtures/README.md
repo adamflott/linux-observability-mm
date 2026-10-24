@@ -19,29 +19,24 @@ of changing gauges, not expected values for future live reads. Varied order
 counts, sparse NUMA nodes and integer edge cases use synthetic inputs in tests.
 
 `synthetic-zoneinfo` also exercises multiple sparse NUMA nodes, unknown zone
-names, optional fields, newer pageset bounds and high-atomic fields. The root
-reporter fixture contains the same synthetic input.
+names, optional fields, newer pageset bounds and high-atomic fields.
 
 The recorded swap captures have only headers: neither VM had active swap.
 `synthetic-swaps` exercises devices, escaped file names, unfamiliar types and
-signed priorities. VM lifecycle validation saves additional populated captures
-under `target/vm-validation*/swaps-active-proc/swaps` after enabling temporary
-guest-only swap files, then verifies cleanup. The root reporter fixture contains
-the same synthetic swap input.
+signed priorities.
 
 Slabinfo captures used `sudo cat /proc/slabinfo` because both VMs restrict reads
 to root. Each is a complete SLUB version 2.1 table; counts change over time.
 `synthetic-slabinfo` covers zero-object caches, large integers and unknown names.
 `slabinfo-statistics` is a synthetic legacy SLAB statistics table based on the
-Linux 6.1 formatter, not a live capture. Copies of both synthetic inputs support
-the root reporter tests.
+Linux 6.1 formatter, not a live capture.
 
 Pagetypeinfo captures used `sudo cat /proc/pagetypeinfo`; trailing spaces were
 removed. The ARM64 kernel includes CMA migration columns, while the x86_64
 kernel does not. Neither capture contains capped values or mixed blocks.
 `synthetic-pagetypeinfo` covers sparse nodes, varying order widths, large
 integers, unknown names, reordered columns, capped counts and optional mixed
-tables. The root reporter uses a copy of this synthetic input.
+tables.
 
 The `process-information-{status,stat,limits,numa_maps}` files are separate native
 file values extracted from the normal-user memory diagnostics smoke capture on

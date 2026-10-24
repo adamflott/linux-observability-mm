@@ -1,10 +1,10 @@
-# wora-observability-linux-mm
+# linux-observability-mm
 
 Typed Linux memory readers extending `procfs` 0.18. Linux-only; requires Rust
 1.95+. No async runtime or exporter dependency.
 
-[Memory guide](https://github.com/adamflott/wora/blob/master/docs/memory.md) ·
-[Implementation TODO](https://github.com/adamflott/wora/blob/master/wora-observability-linux-mm/TODO.md)
+[Memory guide](https://github.com/adamflott/linux-observability-mm/blob/master/docs/memory.md) ·
+[Implementation TODO](https://github.com/adamflott/linux-observability-mm/blob/master/TODO.md)
 
 ## Coverage
 
@@ -15,9 +15,9 @@ Typed Linux memory readers extending `procfs` 0.18. Linux-only; requires Rust
 | Backing/sharing | Swap, zswap, zram, KSM and System V shared memory. |
 | Process/pages | Status/limits/faults/OOM preferences, RSS/PSS rollups, mappings/NUMA policy, physical-frame metadata and pagemap flags. |
 | Kernel/hardware diagnostics | SLAB/SLUB, shrinkers, vmalloc/allocation sites, DAMON_STAT, MGLRU, page owner, kmemleak, hotplug blocks, EDAC, poisoned-page recovery and CMA. |
-| Trace parsing | OOM victims, direct reclaim, compaction and migration; WORA supplies the optional live tracefs service. |
+| Trace parsing | Caller-supplied ftrace text for OOM victims, direct reclaim, compaction and migration. |
 
-The [subsystem/source tables](https://github.com/adamflott/wora/blob/master/docs/memory.md#linux-mm-subsystems)
+The [subsystem/source tables](https://github.com/adamflott/linux-observability-mm/blob/master/docs/memory.md#linux-mm-subsystems)
 and each type's Rustdoc describe paths, scope and units.
 Zswap includes compression/decompression failure counts and stored-incompressible
 page counts; counters absent on older kernels remain per-file errors.
@@ -25,15 +25,15 @@ page counts; counters absent on older kernels remain per-file errors.
 ## Kernel compatibility
 
 Support is per interface/format; no universal kernel minimum/maximum is validated.
-Recorded live fixtures cover Debian 6.12.95 on ARM64/x86_64, with historical
-reporter observations on 6.18.55. The 4.19 zoneinfo and 6.1 legacy-SLAB formats
+Recorded live fixtures cover Debian 6.12.95 on ARM64/x86_64.
+The 4.19 zoneinfo and 6.1 legacy-SLAB formats
 have review/synthetic coverage, not whole-crate live validation.
 
 Features such as PSI, MGLRU and allocinfo require kernel/configuration support.
 For the 7.3-rc7 pagemap ABI, `PageMapEntry::userfaultfd_protection` uses matching
 smaps `VmFlags` to distinguish WP/RWP; missing context stays unknown. The existing
 `uffd_write_protected` field remains a compatibility name for raw bit 57.
-See [kernel compatibility](https://github.com/adamflott/wora/blob/master/docs/memory.md#supported-linux-kernels)
+See [kernel compatibility](https://github.com/adamflott/linux-observability-mm/blob/master/docs/memory.md#supported-linux-kernels)
 for feature versions and evidence. Other kernels use best-effort supported layouts.
 
 ## Parsing
@@ -93,7 +93,7 @@ let info = snapshot?;
 The scope covers synchronous collectors on its current thread; nested scopes are
 rejected. Direct procfs `Current`/`FromRead` calls do not acquire the I/O budget.
 Defaults include 16 MiB input per batch, 4 MiB per file and 64 KiB per line;
-[all limits](https://github.com/adamflott/wora/blob/master/docs/memory.md#collection-and-retention-limits)
+[all limits](https://github.com/adamflott/linux-observability-mm/blob/master/docs/memory.md#collection-and-retention-limits)
 include attempts, entries, paths and ancestor depth. These are not heap/RSS limits.
 
 `HeapBudget` separately admits retained/scratch allocation requests through
@@ -133,12 +133,12 @@ Privileges and mounted/configured interfaces determine availability.
 Run on Linux:
 
 ```sh
-cargo test --locked -p wora-observability-linux-mm --all-features
-cargo doc --locked -p wora-observability-linux-mm --all-features --no-deps
+cargo test --locked -p linux-observability-mm --all-features
+cargo doc --locked -p linux-observability-mm --all-features --no-deps
 ```
 
-Live-kernel tests are opt-in: `cargo test -p wora-observability-linux-mm --test live -- --ignored`.
-[Fixture provenance](https://github.com/adamflott/wora/blob/master/wora-observability-linux-mm/tests/fixtures/README.md).
+Live-kernel tests are opt-in: `cargo test -p linux-observability-mm --test live -- --ignored`.
+[Fixture provenance](https://github.com/adamflott/linux-observability-mm/blob/master/tests/fixtures/README.md).
 
 Read-only mapping-query evaluation (6.11+ headers; exit 77 means unsupported kernel):
 

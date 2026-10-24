@@ -48,7 +48,7 @@ pub enum HeapKind {
     Scratch,
 }
 
-/// Live and peak reservation bytes from one WORA allocation budget.
+/// Live and peak reservation bytes from one [`HeapBudget`].
 ///
 /// Includes requested storage and configured per-allocation overhead. Does not
 /// measure uninstrumented allocations, allocator-retained pages or process RSS.

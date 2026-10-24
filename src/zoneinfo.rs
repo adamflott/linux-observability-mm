@@ -74,8 +74,7 @@ pub struct ZoneWatermarks {
     pub promo_pages: Option<u64>,
 }
 
-/// Raw per-CPU pageset fields. These are parsed for library consumers but the
-/// reporter does not export per-CPU series by default.
+/// Raw per-CPU pageset fields, kept separate for each CPU.
 ///
 /// Parsed from a zone's `pagesets` / `cpu:` section in `/proc/zoneinfo`.
 /// These numeric values are retained in kernel units; they are not the zone

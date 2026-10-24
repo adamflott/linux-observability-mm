@@ -1,7 +1,6 @@
 # Linux memory reader TODO
 
-Runtime budgets, reporting and profiling: [runtime TODO](../TODO.md).
-Current behavior and measurements: [memory guide](../docs/memory.md).
+Reader behavior, source coverage and collection limits: [memory guide](docs/memory.md).
 
 ## Collector and allocation limits
 
