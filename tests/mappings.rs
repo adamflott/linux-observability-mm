@@ -1,5 +1,5 @@
 #![cfg(target_os = "linux")]
-use wora_observability_linux_mm::{MemoryMapping, ParsedMemoryValue, ProcessMemoryDetails, ProcessMemoryStats};
+use linux_observability_mm::{MemoryMapping, ParsedMemoryValue, ProcessMemoryDetails, ProcessMemoryStats};
 
 #[test]
 fn mapping_fields_flags_paths_and_process_controls_are_preserved() -> Result<(), Box<dyn std::error::Error>> {

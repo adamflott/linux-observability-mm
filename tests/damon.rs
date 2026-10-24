@@ -1,7 +1,7 @@
 #![cfg(target_os = "linux")]
 
 use std::{fs, os::unix::fs::PermissionsExt};
-use wora_observability_linux_mm::{CollectionLimit, CollectionLimits, DamonStats, MemoryReadError, MemorySkipReason, collect_with_limits};
+use linux_observability_mm::{CollectionLimit, CollectionLimits, DamonStats, MemoryReadError, MemorySkipReason, collect_with_limits};
 
 // Synthetic layouts from the version-tagged DAMON_STAT documentation, not
 // booted-kernel fixtures. 6.19 adds signed active times/interval; 7.2 adds PID.

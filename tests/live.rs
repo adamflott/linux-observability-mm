@@ -1,7 +1,7 @@
 #![cfg(target_os = "linux")]
 #![allow(clippy::unwrap_used)]
 
-use wora_observability_linux_mm::{
+use linux_observability_mm::{
     BuddyInfo, CgroupMemoryStats, Current, HugePageStats, MemorySysctls, PageTypeInfo, ProcError, ProcessMemoryStats, SlabInfo, Swaps, SysctlSkipReason,
     ZoneInfo,
 };

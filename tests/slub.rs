@@ -1,6 +1,6 @@
 #![cfg(target_os = "linux")]
 use std::{fs, os::unix::fs::symlink};
-use wora_observability_linux_mm::{ParsedMemoryValue, SlubStats};
+use linux_observability_mm::{ParsedMemoryValue, SlubStats};
 
 #[test]
 fn cache_aliases_do_not_duplicate_accounting_and_actions_are_excluded() -> Result<(), Box<dyn std::error::Error>> {

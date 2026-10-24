@@ -3,7 +3,7 @@
 
 use std::io::{self, Read};
 
-use wora_observability_linux_mm::{FreeBlockCount as Count, FromRead, PageTypeInfo, ProcError};
+use linux_observability_mm::{FreeBlockCount as Count, FromRead, PageTypeInfo, ProcError};
 
 const INPUT: &str = include_str!("fixtures/synthetic-pagetypeinfo");
 

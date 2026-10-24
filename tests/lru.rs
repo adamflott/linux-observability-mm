@@ -1,5 +1,5 @@
 #![cfg(target_os = "linux")]
-use wora_observability_linux_mm::{LruHistogram, LruStats};
+use linux_observability_mm::{LruHistogram, LruStats};
 
 // Synthetic full-statistics rows from mm/vmscan.c in 6.12/7.2. Suffixes are
 // significant: r/e/p are counts, R/T averages, x unavailable placeholders.
@@ -17,7 +17,7 @@ fn full_generation(sequence: u64, averages: bool) -> String {
 
 #[test]
 fn full_histograms_preserve_cgroup_node_generation_tier_and_availability() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::ParsedMemoryValue;
+    use linux_observability_mm::ParsedMemoryValue;
     let root = tempfile::tempdir()?;
     std::fs::create_dir_all(root.path().join("kernel/debug"))?;
     let text = format!(
@@ -54,14 +54,14 @@ fn full_histograms_preserve_cgroup_node_generation_tier_and_availability() -> Re
     }
     assert_eq!(std::fs::read_to_string(root.path().join("kernel/debug/lru_gen_full"))?, text);
     let no_memcg = format!("memcg 0 \n node 0\n{}", full_generation(0, true));
-    assert!(wora_observability_linux_mm::parse_memory_file("lru_gen_full", &no_memcg)?.is_some());
+    assert!(linux_observability_mm::parse_memory_file("lru_gen_full", &no_memcg)?.is_some());
     assert_eq!(LruHistogram::parse("memcg 0 \n node 0\n 0 1 2 3\n")?[0].cgroup_path, "");
     Ok(())
 }
 
 #[test]
 fn full_histograms_reject_incomplete_unknown_or_duplicate_scopes_and_obey_limits() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::{CollectionLimit, CollectionLimits, ParsedMemoryValue, collect_with_limits, parse_memory_file};
+    use linux_observability_mm::{CollectionLimit, CollectionLimits, ParsedMemoryValue, collect_with_limits, parse_memory_file};
     let valid = format!("memcg 4 /\nnode 9\n{}", full_generation(2, true));
     for bad in [
         "memcg 4 /\n".to_owned(),

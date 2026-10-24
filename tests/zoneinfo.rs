@@ -3,7 +3,7 @@
 
 use std::io::{self, Read};
 
-use wora_observability_linux_mm::{FromRead, ProcError, ZoneInfo};
+use linux_observability_mm::{FromRead, ProcError, ZoneInfo};
 
 const SYNTHETIC: &str = include_str!("fixtures/synthetic-zoneinfo");
 

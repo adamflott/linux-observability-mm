@@ -2,7 +2,7 @@
 
 use std::fs;
 
-use wora_observability_linux_mm::{FromRead, MemoryReadError, ProcessMemoryStats, SmapsRollup};
+use linux_observability_mm::{FromRead, MemoryReadError, ProcessMemoryStats, SmapsRollup};
 
 const HEADER: &str = "1000-9000 ---p 00000000 00:00 0 [rollup]\n";
 

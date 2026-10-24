@@ -3,7 +3,7 @@
 use std::fs;
 use std::path::Path;
 
-use wora_observability_linux_mm::{CgroupMemory, CgroupMemoryStats, CgroupMemoryValue, MemoryReadError, MemorySkipReason};
+use linux_observability_mm::{CgroupMemory, CgroupMemoryStats, CgroupMemoryValue, MemoryReadError, MemorySkipReason};
 
 fn mount_line(root: &str, directory: &Path) -> String {
     let escaped = directory.to_string_lossy().replace('\\', "\\134").replace(' ', "\\040");
@@ -12,7 +12,7 @@ fn mount_line(root: &str, directory: &Path) -> String {
 
 #[test]
 fn dmem_uses_existing_discovery_and_keeps_region_scope_bytes_and_unlimited_limits() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::ParsedMemoryValue;
+    use linux_observability_mm::ParsedMemoryValue;
     let root = tempfile::tempdir()?;
     let proc = root.path().join("proc");
     let mount = root.path().join("device memory mount");
@@ -74,7 +74,7 @@ fn dmem_uses_existing_discovery_and_keeps_region_scope_bytes_and_unlimited_limit
 #[test]
 fn dmem_rejects_partial_tables_respects_budgets_and_never_reads_controls() -> Result<(), Box<dyn std::error::Error>> {
     use std::os::unix::fs::{PermissionsExt, symlink};
-    use wora_observability_linux_mm::{CollectionLimits, collect_with_limits};
+    use linux_observability_mm::{CollectionLimits, collect_with_limits};
     let root = tempfile::tempdir()?;
     fs::write(root.path().join("memory.current"), "123\n")?;
     for malformed in [
@@ -138,7 +138,7 @@ fn captures_hugetlb_limits_local_events_and_effective_memory_nodes() -> Result<(
     assert!(matches!(&stats.parsed["hugetlb.1GB.max"], CgroupMemoryValue::Text(v) if v == "max"));
     assert!(matches!(&stats.parsed["hugetlb.2MB.events.local"], CgroupMemoryValue::Counters(v) if v["max"] == 3));
     assert!(
-        matches!(&stats.parsed["cpuset.mems.effective"], CgroupMemoryValue::Structured(wora_observability_linux_mm::ParsedMemoryValue::List(v)) if v.len() == 2)
+        matches!(&stats.parsed["cpuset.mems.effective"], CgroupMemoryValue::Structured(linux_observability_mm::ParsedMemoryValue::List(v)) if v.len() == 2)
     );
     Ok(())
 }

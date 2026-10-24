@@ -1,7 +1,7 @@
 #![cfg(target_os = "linux")]
 
 use std::fs;
-use wora_observability_linux_mm::{
+use linux_observability_mm::{
     CollectionLimit, CollectionLimits, MemoryReadError, MemorySkipReason, ParsedMemoryValue, ShrinkerStats, collect_with_limits, parse_memory_file,
 };
 

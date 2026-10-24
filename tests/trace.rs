@@ -1,5 +1,5 @@
 #![cfg(target_os = "linux")]
-use wora_observability_linux_mm::{MemoryTraceParser, MemoryTraceRecord};
+use linux_observability_mm::{MemoryTraceParser, MemoryTraceRecord};
 
 #[test]
 fn trace_identity_timing_loss_and_unknown_records_remain_explicit() -> Result<(), Box<dyn std::error::Error>> {

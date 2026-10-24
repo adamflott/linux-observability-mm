@@ -1,6 +1,6 @@
 #![cfg(target_os = "linux")]
 use std::fs;
-use wora_observability_linux_mm::{MemoryHardwareStats, ParsedMemoryValue};
+use linux_observability_mm::{MemoryHardwareStats, ParsedMemoryValue};
 
 #[test]
 fn hardware_scopes_and_cma_ranges_remain_separate_and_actions_untouched() -> Result<(), Box<dyn std::error::Error>> {

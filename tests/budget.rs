@@ -1,7 +1,7 @@
 #![cfg(target_os = "linux")]
 
 use std::fs;
-use wora_observability_linux_mm::{CgroupMemory, CgroupMemoryStats, CollectionLimit, CollectionLimits, MemoryFiles, collect_with_limits};
+use linux_observability_mm::{CgroupMemory, CgroupMemoryStats, CollectionLimit, CollectionLimits, MemoryFiles, collect_with_limits};
 
 #[test]
 fn one_budget_covers_multiple_sources_and_never_parses_an_oversized_prefix() -> Result<(), Box<dyn std::error::Error>> {
@@ -107,7 +107,7 @@ fn budgets_validate_before_collection_and_restore_after_unwind() -> Result<(), B
 
 #[test]
 fn binary_ranges_share_the_budget_and_paths_are_checked_before_reading() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::{PageRange, read_page_entries};
+    use linux_observability_mm::{PageRange, read_page_entries};
     let root = tempfile::tempdir()?;
     let path = root.path().join("pagemap");
     fs::write(&path, [1u64.to_ne_bytes(), 2u64.to_ne_bytes()].concat())?;
@@ -159,7 +159,7 @@ fn failed_explicit_sources_cannot_bypass_the_budget_with_zero_input_bytes() -> R
 
 #[test]
 fn shared_storage_keeps_credit_and_refuses_copy_before_mutation() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::{HeapBudget, HeapError, HeapKind, HeapLimits, MemoryList};
+    use linux_observability_mm::{HeapBudget, HeapError, HeapKind, HeapLimits, MemoryList};
     let probe = HeapBudget::default();
     let mut values = MemoryList::new(probe.clone());
     values.try_push(1u64)?;
@@ -186,7 +186,7 @@ fn shared_storage_keeps_credit_and_refuses_copy_before_mutation() -> Result<(), 
 
 #[test]
 fn source_scratch_and_error_maps_fail_without_successful_empty_samples() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::{HeapBudget, HeapError, HeapKind, HeapLimits, MemoryReadError, with_heap_budget};
+    use linux_observability_mm::{HeapBudget, HeapError, HeapKind, HeapLimits, MemoryReadError, with_heap_budget};
     let root = tempfile::tempdir()?;
     fs::write(root.path().join("value"), "12345678\n")?;
     let scratch = HeapBudget::new(HeapLimits {
@@ -226,7 +226,7 @@ fn source_scratch_and_error_maps_fail_without_successful_empty_samples() -> Resu
 
 #[test]
 fn parsed_storage_shares_credit_and_refusal_releases_partial_tables() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::{HeapBudget, HeapLimits, parse_memory_file, with_heap_budget};
+    use linux_observability_mm::{HeapBudget, HeapLimits, parse_memory_file, with_heap_budget};
     let budget = HeapBudget::default();
     let value = with_heap_budget(&budget, || parse_memory_file("/proc/self/status", "Name:\ttest\nVmRSS:\t12 kB\n"))?.ok_or("missing parsed value")?;
     let bytes = budget.usage().retained_bytes;

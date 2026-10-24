@@ -3,7 +3,7 @@
 
 use std::io::{self, Read};
 
-use wora_observability_linux_mm::{FromRead, ProcError, SlabInfo};
+use linux_observability_mm::{FromRead, ProcError, SlabInfo};
 
 const INPUT: &str = include_str!("fixtures/synthetic-slabinfo");
 const STATS: &str = include_str!("fixtures/slabinfo-statistics");

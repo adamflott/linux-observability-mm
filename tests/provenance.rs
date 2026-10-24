@@ -1,5 +1,5 @@
 #![cfg(target_os = "linux")]
-use wora_observability_linux_mm::{KernelLeakStats, PageOwnerStats, ParsedMemoryValue};
+use linux_observability_mm::{KernelLeakStats, PageOwnerStats, ParsedMemoryValue};
 
 // Synthetic records matching mm/page_owner.c in Linux 6.12 and 7.2.
 const OWNER: &str = "Page allocated via order 2, mask 0x140cca(GFP_HIGHUSER_MOVABLE|__GFP_COMP), pid 12, tgid 9 (worker (pool)), ts 18446744073709551615 ns\nPFN 0x20000000000001 type Movable Block 77 type Unmovable Flags 0x17ffffc0000000(anon|swapbacked)\n alloc_pages+0x123/0x456\n caller+0x1/0x2 [test_module]\nPage has been migrated, last migrate reason: compaction\nSlab cache page\nCharged (via objcg) to offline memcg worker\n\n";
@@ -43,7 +43,7 @@ fn kmemleak_suspects_keep_uncertain_metadata_and_stacks_but_discard_object_bytes
 
 #[test]
 fn kmemleak_rejects_truncated_malformed_or_oversized_dumps_without_partial_suspects() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::parse_memory_file;
+    use linux_observability_mm::parse_memory_file;
     for bad in [
         LEAK.replace(" (size 9007199254740993):", " (size -1):"),
         LEAK.replace("jiffies 18446744073709551615", "jiffies 18446744073709551616"),
@@ -129,7 +129,7 @@ fn page_owner_aggregate_layouts_keep_signed_handles_and_native_page_counts() -> 
 
 #[test]
 fn provenance_parsing_rejects_bad_or_partial_records_and_bounds_stack_growth() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::parse_memory_file;
+    use linux_observability_mm::parse_memory_file;
     for bad in [
         "Page allocated via order 0\nPFN 42 pid 9\n".to_owned(),
         OWNER.replace("0x140cca", "0xnot_hex"),

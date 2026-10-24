@@ -1,6 +1,6 @@
 #![cfg(target_os = "linux")]
 use std::{fs, os::unix::fs::symlink};
-use wora_observability_linux_mm::{CompressedMemoryStats, MemoryReadError, ParsedMemoryValue, ZramMemoryStat};
+use linux_observability_mm::{CompressedMemoryStats, MemoryReadError, ParsedMemoryValue, ZramMemoryStat};
 
 #[test]
 fn zswap_failures_and_incompressible_pages_preserve_units_and_precision() -> Result<(), Box<dyn std::error::Error>> {

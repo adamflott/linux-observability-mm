@@ -1,6 +1,6 @@
 #![cfg(target_os = "linux")]
 use std::{fs, os::unix::fs::PermissionsExt};
-use wora_observability_linux_mm::{KsmStats, MemorySkipReason, ParsedMemoryValue};
+use linux_observability_mm::{KsmStats, MemorySkipReason, ParsedMemoryValue};
 
 #[test]
 fn signed_profit_future_counters_and_process_scope_are_retained() -> Result<(), Box<dyn std::error::Error>> {

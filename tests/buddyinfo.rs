@@ -3,7 +3,7 @@
 
 use std::io::{self, Read};
 
-use wora_observability_linux_mm::{BuddyInfo, FromRead, ProcError};
+use linux_observability_mm::{BuddyInfo, FromRead, ProcError};
 
 #[test]
 fn parses_recorded_arm64_and_x86_64_tables() {

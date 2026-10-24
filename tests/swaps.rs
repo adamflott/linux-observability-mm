@@ -3,7 +3,7 @@
 
 use std::io::{self, Read};
 
-use wora_observability_linux_mm::{FromRead, ProcError, SwapType, Swaps};
+use linux_observability_mm::{FromRead, ProcError, SwapType, Swaps};
 
 const HEADER: &str = "Filename\tType\tSize\tUsed\tPriority\n";
 const SYNTHETIC: &str = include_str!("fixtures/synthetic-swaps");

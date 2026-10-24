@@ -1,6 +1,6 @@
 #![cfg(target_os = "linux")]
 use std::{fs, os::unix::fs::symlink};
-use wora_observability_linux_mm::{MemoryFiles, MemoryReadError, MemorySkipReason, NumaStats, ParsedMemoryValue};
+use linux_observability_mm::{MemoryFiles, MemoryReadError, MemorySkipReason, NumaStats, ParsedMemoryValue};
 
 #[test]
 fn access_class_topology_preserves_node_scope_units_and_independent_failures() -> Result<(), Box<dyn std::error::Error>> {
@@ -54,7 +54,7 @@ fn access_class_topology_preserves_node_scope_units_and_independent_failures() -
 
 #[test]
 fn access_class_traversal_and_attribute_reads_are_bounded() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::{CollectionLimit, CollectionLimits, collect_with_limits};
+    use linux_observability_mm::{CollectionLimit, CollectionLimits, collect_with_limits};
     let root = tempfile::tempdir()?;
     let node = root.path().join("devices/system/node/node0");
     for class in 0..65 {
@@ -118,7 +118,7 @@ fn weighted_interleave_supports_sparse_69_weights_and_616_auto_mode_without_writ
 
 #[test]
 fn weighted_interleave_isolates_bad_values_excludes_links_and_shares_limits() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::{CollectionLimit, CollectionLimits, collect_with_limits, parse_memory_file};
+    use linux_observability_mm::{CollectionLimit, CollectionLimits, collect_with_limits, parse_memory_file};
     let root = tempfile::tempdir()?;
     let directory = root.path().join("kernel/mm/mempolicy/weighted_interleave");
     fs::create_dir_all(&directory)?;

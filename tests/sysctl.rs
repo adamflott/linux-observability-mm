@@ -3,7 +3,7 @@
 use std::fs;
 use std::os::unix::fs::{PermissionsExt, symlink};
 
-use wora_observability_linux_mm::{MemorySysctls, ParsedMemoryValue as Value, SysctlReadError, SysctlSkipReason};
+use linux_observability_mm::{MemorySysctls, ParsedMemoryValue as Value, SysctlReadError, SysctlSkipReason};
 
 #[test]
 fn retains_native_values_vectors_and_new_memory_settings() -> Result<(), Box<dyn std::error::Error>> {

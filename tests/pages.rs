@@ -1,9 +1,9 @@
 #![cfg(target_os = "linux")]
-use wora_observability_linux_mm::{PageMapEntry, PageRange, PhysicalPageStats, ProcessPageMap, read_page_entries};
+use linux_observability_mm::{PageMapEntry, PageRange, PhysicalPageStats, ProcessPageMap, read_page_entries};
 
 #[test]
 fn bit_57_uses_vma_wp_rwp_context_and_preserves_unknown_and_legacy_flags() -> Result<(), Box<dyn std::error::Error>> {
-    use wora_observability_linux_mm::{MemoryMapping, ParsedMemoryValue, UserfaultfdProtection};
+    use linux_observability_mm::{MemoryMapping, ParsedMemoryValue, UserfaultfdProtection};
     for (flags, expected) in [
         ("uw", UserfaultfdProtection::WriteProtected),
         ("ur", UserfaultfdProtection::ReadWriteProtected),

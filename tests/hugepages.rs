@@ -3,7 +3,7 @@
 use std::fs;
 use std::os::unix::fs::symlink;
 
-use wora_observability_linux_mm::{HugePageFiles, HugePageStats, MemoryReadError, MemorySkipReason, ParsedMemoryValue};
+use linux_observability_mm::{HugePageFiles, HugePageStats, MemoryReadError, MemorySkipReason, ParsedMemoryValue};
 
 #[test]
 fn collects_policy_per_size_stats_and_sparse_node_pools() -> Result<(), Box<dyn std::error::Error>> {

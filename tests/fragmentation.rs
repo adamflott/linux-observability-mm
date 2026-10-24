@@ -1,5 +1,5 @@
 #![cfg(target_os = "linux")]
-use wora_observability_linux_mm::{FragmentationStats, FragmentationZone};
+use linux_observability_mm::{FragmentationStats, FragmentationZone};
 
 #[test]
 fn exact_indices_sentinels_and_sparse_zones_are_not_rounded() -> Result<(), Box<dyn std::error::Error>> {

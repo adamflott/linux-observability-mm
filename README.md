@@ -41,11 +41,11 @@ for feature versions and evidence. Other kernels use best-effort supported layou
 Single-file snapshots implement procfs parsing traits. Parse captured text:
 
 ```rust
-use wora_observability_linux_mm::{BuddyInfo, FromRead};
+use linux_observability_mm::{BuddyInfo, FromRead};
 
 let info = BuddyInfo::from_read(b"Node 0, zone Normal 10 4 0\n".as_slice())?;
 assert_eq!(info.zones[0].free_blocks, vec![10, 4, 0]);
-# Ok::<(), wora_observability_linux_mm::ProcError>(())
+# Ok::<(), linux_observability_mm::ProcError>(())
 ```
 
 `from_file(path)` accepts captures/alternate files; Linux `Current::current()`
@@ -81,7 +81,7 @@ construction does not apply text-parser validation.
 Use the shared budget explicitly for standalone readers:
 
 ```rust,no_run
-use wora_observability_linux_mm::{BuddyInfo, CollectionLimits, collect_with_limits, read_source};
+use linux_observability_mm::{BuddyInfo, CollectionLimits, collect_with_limits, read_source};
 
 let (snapshot, accounting) = collect_with_limits(CollectionLimits::default(), || {
     read_source::<BuddyInfo>("/proc/buddyinfo")

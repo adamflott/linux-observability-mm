@@ -1,7 +1,7 @@
 #![cfg(target_os = "linux")]
 
 use std::{collections::BTreeMap, fs};
-use wora_observability_linux_mm::{
+use linux_observability_mm::{
     CgroupMemory, CgroupMemoryValue, HugePageFiles, KsmStats, MemoryFiles, MemorySysctls, ParsedMemoryValue as Value, parse_memory_file, parse_sysctl_value,
 };
 

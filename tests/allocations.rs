@@ -1,5 +1,5 @@
 #![cfg(target_os = "linux")]
-use wora_observability_linux_mm::{AllocationSites, KernelAllocationStats, ParsedMemoryValue};
+use linux_observability_mm::{AllocationSites, KernelAllocationStats, ParsedMemoryValue};
 
 #[test]
 fn versioned_sites_keep_accuracy_markers_precision_and_native_vmalloc_data() -> Result<(), Box<dyn std::error::Error>> {
